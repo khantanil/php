@@ -41,15 +41,4 @@
 </html>
 
 
- // $upload_dir = 'uploads/';
-        $upload_dir = dirname(__DIR__) . '/uploads/';
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0755, true);  // Creates directory if it doesn't exist
-        }
-
-
-        if (move_uploaded_file($file_tmp_name, $upload_dir . $file_name)) {
-            echo "File uploaded successfully to 'uploads/' directory.<br>";
-        } else {
-            echo "Failed to upload file.<br>";
-        }
+ 
