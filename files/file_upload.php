@@ -37,7 +37,7 @@
             echo "Temporary File Name: " . $file_tmp_name . "<br><br>";
             
 
-            
+
             // Go up one level to reach 'php/' from 'php/files/'
             $upload_dir = dirname(__DIR__) . '/uploads/';
 
@@ -48,7 +48,7 @@
                 mkdir($upload_dir, 0755, true);  // create directory
             }
 
-            $destination = $upload_dir . $file_name;
+            $destination = $upload_dir . $file_name;    
 
             if (move_uploaded_file($file_tmp_name, $destination)) {
                 echo "✅ File uploaded successfully to 'uploads/' directory.<br>";
