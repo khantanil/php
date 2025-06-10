@@ -51,16 +51,53 @@
     </nav>
 
 
+    <?php
+    // Check if the form is submitted
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $comments = $_POST['comments'];
+        $dob = $_POST['dob'];
+
+        // Database connection
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "test";
+
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        } else {
+            // echo "Connected successfully";
+
+            // Submit to the database
+            $sql = "INSERT INTO contact (name, email, concern, date) VALUES ('$name', '$email', '$comments', '$dob')";
+            $result = mysqli_query($conn, $sql);
+            
+            if ($result) {
+                echo '<div class="alert alert-success fade show" role="alert" id="successAlert">
+                        <strong>Success!</strong> Your data has been submitted successfully...
+                      </div>';
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+        }
+    }
+
+    ?>
+
     <div class="container mt-3">
-        <form action="form.php" method="post" class="w-50 mx-auto">
+        <form action="" method="post" class="w-50 mx-auto">
             <h3>Submit form data in the database</h3>
             <div class="mb-3">
                 <label for="exampleInputName" class="form-label fw-bold">Name:</label>
-                <input type="text" class="form-control" id="exampleInputName">
+                <input type="text" class="form-control" id="exampleInputName" name="name" required>
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label fw-bold">Email address:</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
             </div>
             <div class="mb-3">
                 <label for="commentBox" class="form-label fw-bold">Concern:</label>
@@ -76,8 +113,16 @@
         </form>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery if not already -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#successAlert").alert('close');
+            }, 2000); 
+        });
+    </script>
 </body>
 
 </html>
