@@ -18,10 +18,10 @@ $result = mysqli_query($conn, $sql);
 
 // Showing total records
 $num_rows = mysqli_num_rows($result);
-echo  $num_rows. " records found<br>";
+echo  $num_rows . " records found<br>";
 
-if($num_rows>0){
-    echo "<table class='table table-striped'>
+if ($num_rows > 0) {
+    echo "<table class='table table-striped table-bordered' >
             <thead>
                 <tr>
                     <th scope='col'>ID</th>
@@ -32,19 +32,20 @@ if($num_rows>0){
                 </tr>
             </thead>
             <tbody>";
-    
+
+    $counter = 1;
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<tr>
-                <td>{$row['sno']}</td>
+                <td>{$counter}</td>
                 <td>{$row['name']}</td>
                 <td>{$row['email']}</td>
                 <td>{$row['concern']}</td>
                 <td>{$row['date']}</td>
               </tr>";
+        $counter++;
     }
-    
+
     echo "</tbody></table>";
 } else {
     echo "No records found.";
 }
-?>
