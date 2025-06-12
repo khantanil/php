@@ -25,7 +25,7 @@
         $password = $_POST['password'];
         $cpassword = $_POST['cpassword'];
 
-        $exists = false;
+
         if ($password != $cpassword) {
             echo '<div class="alert alert-danger fade show" role="alert">
                 Passwords do not match!
@@ -37,7 +37,6 @@
             $num = mysqli_num_rows($result);
 
             if ($num > 0) {
-                $exists = true;
                 echo '<div class="alert alert-danger fade show" role="alert">
                     Email already exists!
                   </div>';
