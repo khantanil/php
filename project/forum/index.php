@@ -15,7 +15,7 @@
     .carousel-inner img {
         width: 100%;
         height: 635px;
-        object-fit: cover;    
+        object-fit: cover;
     }
 
     .carousel-inner h5,
@@ -86,7 +86,7 @@
 
     <!-- Category Container -->
     <div class="container">
-        <h1 class="text-center my-3">iDiscuss Brows-Categories</h1>
+        <h1 class="text-center my-3">iDiscuss Browse-Categories</h1>
         <div class="row">
 
             <!-- Fetch all the categorie from db -->
@@ -100,14 +100,14 @@
                 $categoryDesc = $row['category_description'];
                 // Generate image from Unsplash based on category name
                 $imageUrl = "https://picsum.photos/seed/" . urlencode($categoryName) . "/500/400";
-                echo 
-                    '<div class="col-md-4 d-flex justify-content-center my-3">
+                echo
+                '<div class="col-md-4 d-flex justify-content-center my-3">
                         <div class="card" style="width: 18rem;">
                             <img src="' . $imageUrl . '" class="card-img-top img-fluid" alt="' . $categoryName . '">
                             <div class="card-body">
-                                <h5 class="card-title"><a href="thred-list.php?catid=' .$categoryId. '">' . $categoryName . '</a></h5>
-                                <p class="card-text">' . substr($categoryDesc,0,80) . ' ...</p>
-                                <a href="thred-list.php?catid=' .$categoryId. '" class="btn btn-primary">View Thread</a>
+                                <h5 class="card-title"><a href="thred-list.php?catid=' . $categoryId . '">' . $categoryName . '</a></h5>
+                                <p class="card-text">' . substr($categoryDesc, 0, 80) . ' ...</p>
+                                <a href="thred-list.php?catid=' . $categoryId . '" class="btn btn-primary">View Thread</a>
                             </div>
                         </div>
                     </div>';
@@ -121,6 +121,14 @@
     <?php include 'partials/footer.php'; ?>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('#signupSuccessAlert').fadeOut('slow');
+            }, 3000);
+        });
+    </script>
 
 
 </body>

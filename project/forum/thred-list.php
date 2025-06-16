@@ -25,6 +25,35 @@
     $catdesc = $row['category_description'];
     ?>
 
+
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $th_title = $_POST['title'];
+        $th_desc = $_POST['desc'];
+        $id = $_GET['catid'];
+        $user_id = 0;
+
+        $sql2 = "INSERT INTO `thread` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) 
+             VALUES ('$th_title', '$th_desc', '$id', '$user_id', current_timestamp())";
+
+        $result = mysqli_query($conn, $sql2);
+        if ($result) {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+            <strong>Success!</strong> Your question has been posted successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        } else {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+            <strong>Oops!</strong> There was an error posting your question. Please try again later.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+        }
+
+    }
+    ?>
+
+
     <div class="container my-4">
         <div class="px-2 mb-4 bg-light rounded-3">
             <div class="container-fluid py-3">
@@ -45,6 +74,22 @@
     </div>
 
 
+    <div class="container px-3 mb-1 ">
+        <h2>Start a Disscussion</h2>
+        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Problem Title</label>
+                <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="decs" name="desc" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Elaborate your concern</label>
+            </div>
+            <button type="submit" class="btn btn-success my-2 px-3">Submit</button>
+        </form>
+    </div>
+
+
     <div class="container my-4 ">
         <h2>Browse Questions</h2>
         <?php
@@ -59,13 +104,15 @@
             $threadtitle = $row['thread_title'];
             $threaduser = $row['thread_user_id'];
             $treaddescription = $row['thread_desc'];
+            $threadtime = $row['timestamp'];
 
             echo '<div class="d-flex align-items-center my-3 ">
             <div class="flex-shrink-0">
-                <img src="user-icon.webp" width="100x" alt="...">
+                <img src="assets/user-icon.webp" width="100x" alt="...">
             </div>
             <div class="flex-grow-1 ms-3">
-                <h5><a href="thread.php?threadid=' . $id . '">' . $threadtitle . '</a></h5>' . $treaddescription . '
+                <p class="fw-bold my-0">Anonymous User  at ' . $threadtime . ' </p>
+                <h5><a href="thread.php?threadid=' .  $threadid . '">' . $threadtitle . '</a></h5>' . $treaddescription . '
             </div>
         </div>';
         }
@@ -77,17 +124,6 @@
           </div>';
         }
         ?>
-        <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Problem Title</label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
-            </div>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="decs" name="desc" style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Elaborate your concern</label>
-            </div>
-            <button type="submit" class="btn btn-primary my-2 px-3">Submit</button>
-        </form>
 
     </div>
 
@@ -97,7 +133,23 @@
 
     <?php include 'partials/footer.php'; ?>
     <!-- Option 1: Bootstrap Bundle with Popper -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Auto-dismiss success alert after 3 seconds
+            setTimeout(function() {
+                $('#successAlert').fadeOut('slow');
+            }, 3000);
+
+            // Auto-dismiss error alert after 3 seconds
+            setTimeout(function() {
+                $('#errorAlert').fadeOut('slow');
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>
