@@ -16,8 +16,7 @@
     <?php include 'partials/header.php'; ?>
     <?php include 'partials/connection.php'; ?>
 
-    <!-- Fetch thread details based on the thread ID from the URL
-    This code retrieves the thread title, user ID, and description from the database -->
+    <!-- Fetch thread details based on the thread ID from the URL -->
     <?php
     $id = $_GET['threadid']; // Get the category ID from the URL in the main file
     $sql = "SELECT * FROM `thread` WHERE thread_id = $id";
@@ -50,16 +49,31 @@
 
 
     <!-- Post a comment section -->
+   
+
+  <?php
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    echo '
     <div class="container px-3 mb-1 ">
         <h2>Post a comment</h2>
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
+        <form action="' . $_SERVER['REQUEST_URI'] . '" method="post">
             <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="comment" name="comment" rows="3"></textarea>
                 <label for="floatingTextarea2">Type your comment</label>
             </div>
             <button type="submit" class="btn btn-success my-2 px-3">Post Comment</button>
         </form>
-    </div>
+    </div>';
+} else {
+    echo '<div class="container my-4">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">You are not logged in!</h4>
+                <p>Please log in to post a comment.</p>
+            </div>
+          </div>';
+}
+?>
+
 
 
     <!-- Display comments section -->

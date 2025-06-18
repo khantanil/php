@@ -117,6 +117,7 @@
         </div>
     </div>
 
+    
 
     <?php include 'partials/footer.php'; ?>
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -125,7 +126,7 @@
     <script>
         $(document).ready(function() {
             setTimeout(function() {
-                $('#signupSuccessAlert').fadeOut('slow');
+                $('#signupSuccessAlert,#successAlert, #errorAlert, #loginSuccessAlert').fadeOut('slow');
             }, 3000);
         });
     </script>

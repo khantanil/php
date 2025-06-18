@@ -18,7 +18,7 @@
                         <input type="password" class="form-control" id="loginPassword" name="loginPassword">
                     </div>
                    
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-success">Login</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

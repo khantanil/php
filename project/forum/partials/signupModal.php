@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="signupModalLabel">Signup for iDiscuss account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="partials/handleSignup.php" method="post">
+            <form action="/php/project/forum/partials/handleSignup.php" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="signupEmail" class="form-label">Email address</label>
@@ -17,12 +17,12 @@
                         <label for="signupPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" id="signupPassword" name="signupPassword">
                     </div>
-                      <div class="mb-3">
+                    <div class="mb-3">
                         <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="signupConfirmPassword1" name="signupConfirmPassword">
                     </div>
-                   
-                    <button type="submit" class="btn btn-primary">Signup</button>
+
+                    <button type="submit" class="btn btn-success">Signup</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
