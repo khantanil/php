@@ -10,10 +10,10 @@ echo '<footer class="bg-dark text-white mt-5">
       <div class="col-md-4">
         <h5>Quick Links</h5>
         <ul class="list-unstyled">
-          <li><a href="index.php" class="text-white text-decoration-none">Home</a></li>
-          <li><a href="create_thread.php" class="text-white text-decoration-none">New Thread</a></li>
-          <li><a href="login.php" class="text-white text-decoration-none">Login</a></li>
-          <li><a href="register.php" class="text-white text-decoration-none">Register</a></li>
+          <li><a href="index.php"class=" text-decoration-none">Home</a></li>
+          <li><a href="about.php"class=" text-decoration-none">About</a></li>
+          <li><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+          <li><a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#signupModal">Register</a></li>
         </ul>
       </div>
 

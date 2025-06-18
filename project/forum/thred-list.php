@@ -13,8 +13,8 @@
 
 <body>
 
-    <?php include 'partials/header.php'; ?>
     <?php include 'partials/connection.php'; ?>
+    <?php include 'partials/header.php'; ?>
 
     <?php
     $id = $_GET['catid']; // Get the category ID from the URL in the main file
@@ -32,8 +32,16 @@
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $th_title = $_POST['title'];
             $th_desc = $_POST['desc'];
+
+            $th_title = str_replace("<", "&lt;", $th_title);
+            $th_title = str_replace(">", "&gt;", $th_title);
+            $th_title = mysqli_real_escape_string($conn, $th_title);
+            $th_desc = str_replace("<", "&lt;", $th_desc);
+            $th_desc = str_replace(">", "&gt;", $th_desc);
+            $th_desc = mysqli_real_escape_string($conn, $th_desc);
+
             $id = $_GET['catid'];
-            $user_id = 0; // you can update this to use $_SESSION['user_id'] if available
+            $user_id = $_POST['sno'];
 
             $sql2 = "INSERT INTO `thread` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`, `timestamp`) 
                  VALUES ('$th_title', '$th_desc', '$id', '$user_id', current_timestamp())";
@@ -95,6 +103,9 @@
                 <label for="title" class="form-label">Question Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter your question title here" required>
              </div>
+
+            <input type="hidden" name="sno" value="' . $_SESSION['sno'] . '">
+
              <div class="mb-3">
                 <label for="desc" class="form-label">Elaborate your concern</label>
                 <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Describe your question in detail" required></textarea>
@@ -121,23 +132,28 @@
         $sql = "SELECT * FROM `thread` WHERE thread_cat_id = $id";
         $result = mysqli_query($conn, $sql);
         $noResults = true;
+
         while ($row = mysqli_fetch_assoc($result)) {
             $noResults = false;
-            // This will fetch the data from the database
             $threadid = $row['thread_id'];
             $threadtitle = $row['thread_title'];
             $threaduser = $row['thread_user_id'];
             $treaddescription = $row['thread_desc'];
             $threadtime = $row['timestamp'];
-            
+            $threaduserid = $row['thread_user_id'];
 
-            echo '<div class="d-flex align-items-center my-3 ">
+            $sql2 = "SELECT `user_email` FROM `users` WHERE `sno` = '$threaduserid'";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
+
+            echo '<div class="d-flex align-items-center my-3">
             <div class="flex-shrink-0">
-                <img src="assets/user-icon.webp" width="100x" alt="...">
+                <img src="assets/user-icon.webp" width="100" alt="User">
             </div>
             <div class="flex-grow-1 ms-3">
-                <p class="fw-bold my-0">Anonymous User  at ' . $threadtime . ' </p>
-                <h5><a href="thread.php?threadid=' .  $threadid . '">' . $threadtitle . '</a></h5>' . $treaddescription . '
+                <h5><a href="thread.php?threadid=' . $threadid . '">' . $threadtitle . '</a></h5>
+                <p class="mb-1">' . $treaddescription . '</p>
+                <p class="fw-bold my-0 text-muted">Asked by ' . $row2['user_email'] . ' at ' . $threadtime . '</p>
             </div>
         </div>';
         }
@@ -149,6 +165,7 @@
           </div>';
         }
         ?>
+
 
     </div>
 

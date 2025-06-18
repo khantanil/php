@@ -40,8 +40,8 @@
 
 <body>
 
-    <?php include 'partials/header.php'; ?>
     <?php include 'partials/connection.php'; ?>
+    <?php include 'partials/header.php'; ?>
 
 
     <!-- Slider -->
@@ -117,7 +117,6 @@
         </div>
     </div>
 
-    
 
     <?php include 'partials/footer.php'; ?>
     <!-- Option 1: Bootstrap Bundle with Popper -->

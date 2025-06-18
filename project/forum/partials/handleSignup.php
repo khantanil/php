@@ -1,7 +1,9 @@
+
 <?php
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connection.php';
-
+    
     $signupEmail = $_POST['signupEmail'];
     $signupPassword = $_POST['signupPassword'];
     $signupConfirmPassword = $_POST['signupConfirmPassword'];
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
+            $_SESSION['signupSuccess'] = true;
             header("Location: /php/project/forum/index.php?signupSuccess=true");
             exit();
         } else {

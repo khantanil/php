@@ -9,13 +9,12 @@
             <form action="partials/handleLogin.php" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="loginEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <label for="loginEmail" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp" required>
                     </div>
                     <div class="mb-3">
                         <label for="loginPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" name="loginPassword">
+                        <input type="password" class="form-control" id="loginPassword" name="loginPassword" required>
                     </div>
                    
                     <button type="submit" class="btn btn-success">Login</button>
