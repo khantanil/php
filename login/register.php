@@ -28,8 +28,8 @@
 
         if ($password != $cpassword) {
             echo '<div class="alert alert-danger fade show" role="alert">
-                Passwords do not match!
-              </div>';
+                    Passwords do not match!
+                 </div>';
         } else {
             // Check if the email already exists
             $sql = "SELECT * FROM users WHERE email='$email'";
@@ -38,22 +38,22 @@
 
             if ($num > 0) {
                 echo '<div class="alert alert-danger fade show" role="alert">
-                    Email already exists!
-                  </div>';
+                        Email already exists!
+                      </div>';
             } else {
                 // Insert the new user into the database
                 $hash = password_hash($password, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO users (full_name, email, password) VALUES ('$name', '$email', '$hash')";
                 if (mysqli_query($conn, $sql)) {
                     echo '<div class="alert alert-success fade show" role="alert">
-                        Registration successful, Now you can login!
-                      </div>';
+                            Registration successful, Now you can login!
+                         </div>';
                     // Redirect to login page after successful registration
                     // header("Location: login.php");
                 } else {
                     echo '<div class="alert alert-danger fade show" role="alert">
-                        Error: ' . mysqli_error($conn) . '
-                      </div>';
+                            Error: ' . mysqli_error($conn) . '
+                         </div>';
                 }
             }
         }

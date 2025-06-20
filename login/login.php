@@ -42,7 +42,7 @@
                 header("location: welcome.php");
             } else {
                 echo '<div class="alert alert-danger fade show" role="alert">
-                    Invalid credentials!
+                    Invalid Password!
                   </div>';
             }
         } else {

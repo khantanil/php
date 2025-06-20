@@ -147,22 +147,22 @@
             $row2 = mysqli_fetch_assoc($result2);
 
             echo '<div class="d-flex align-items-center my-3">
-            <div class="flex-shrink-0">
-                <img src="assets/user-icon.webp" width="100" alt="User">
-            </div>
-            <div class="flex-grow-1 ms-3">
-                <h5><a href="thread.php?threadid=' . $threadid . '">' . $threadtitle . '</a></h5>
-                <p class="mb-1">' . $treaddescription . '</p>
-                <p class="fw-bold my-0 text-muted">Asked by ' . $row2['user_email'] . ' at ' . $threadtime . '</p>
-            </div>
-        </div>';
+                    <div class="flex-shrink-0">
+                        <img src="assets/user-icon.webp" width="100" alt="User">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5><a href="thread.php?threadid=' . $threadid . '">' . $threadtitle . '</a></h5>
+                        <p class="mb-1">' . $treaddescription . '</p>
+                        <p class="fw-bold my-0 text-muted">Asked by ' . $row2['user_email'] . ' at ' . $threadtime . '</p>
+                    </div>
+                  </div>';
         }
 
         if ($noResults) {
             echo '<div class="alert alert-warning" role="alert">
-            <h4 class="alert-heading">No Threads Found</h4>
-            <p>Be the first person to ask a question.</p>
-          </div>';
+                    <h4 class="alert-heading">No Threads Found</h4>
+                    <p>Be the first person to ask a question.</p>
+                  </div>';
         }
         ?>
 
