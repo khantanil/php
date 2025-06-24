@@ -51,9 +51,9 @@
             $destination = $upload_dir . $file_name;    
 
             if (move_uploaded_file($file_tmp_name, $destination)) {
-                echo "✅ File uploaded successfully to 'uploads/' directory.<br>";
+                echo "File uploaded successfully to 'uploads/' directory.<br>";
             } else {
-                echo "❌ Failed to upload file.<br>";
+                echo "Failed to upload file.<br>";
             }
 
         }
