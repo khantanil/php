@@ -15,76 +15,129 @@
 <body>
     <?php require 'partials/nav.php'; ?>
     <?php
+    session_start();
+    $nameError = $emailError = $passwordError = $cpasswordError = '';
+    $name = $email = $password = $cpassword = '';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         require 'partials/connection.php';
 
-        $name = $_POST['name'];
-        $email = $_POST['email'];
+        $name = trim($_POST['name']);
+        $email = trim($_POST['email']);
         $password = $_POST['password'];
         $cpassword = $_POST['cpassword'];
+        $isValid = true;
 
+        // Name validation
+        if (empty($name)) {
+            $nameError = 'Full name is required.';
+            $isValid = false;
+        } elseif (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+            $nameError = 'Only letters and white space allowed.';
+            $isValid = false;
+        }
 
-        if ($password != $cpassword) {
-            echo '<div class="alert alert-danger fade show" role="alert">
-                    Passwords do not match!
-                 </div>';
-        } else {
-            // Check if the email already exists
-            $sql = "SELECT * FROM users WHERE email='$email'";
-            $result = mysqli_query($conn, $sql);
-            $num = mysqli_num_rows($result);
+        // Email validation
+        if (empty($email)) {
+            $emailError = 'Email is required.';
+            $isValid = false;
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailError = 'Invalid email format.';
+            $isValid = false;
+        }
 
-            if ($num > 0) {
-                echo '<div class="alert alert-danger fade show" role="alert">
-                        Email already exists!
-                      </div>';
-            } else {
-                // Insert the new user into the database
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO users (full_name, email, password) VALUES ('$name', '$email', '$hash')";
-                if (mysqli_query($conn, $sql)) {
-                    echo '<div class="alert alert-success fade show" role="alert">
-                            Registration successful, Now you can login!
-                         </div>';
-                    // Redirect to login page after successful registration
-                    // header("Location: login.php");
+        // Password validation
+        if (empty($password)) {
+            $passwordError = 'Password is required.';
+            $isValid = false;
+        } elseif (strlen($password) < 6) {
+            $passwordError = 'Password must be at least 6 characters.';
+            $isValid = false;
+        }
+
+        // Confirm password validation
+        if (empty($cpassword)) {
+            $cpasswordError = 'Confirm password is required.';
+            $isValid = false;
+        } elseif ($password !== $cpassword) {
+            $cpasswordError = 'Passwords do not match.';
+            $isValid = false;
+        }
+
+        // Check email uniqueness and insert if all valid
+        if ($isValid) {
+            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                $emailError = 'Email already exists.';
+                $isValid = false;
+            }
+            $stmt->close();
+
+            if ($isValid) {
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $name, $email, $hashedPassword);
+
+                if ($stmt->execute()) {
+                    $_SESSION['success'] = "Registration successful! Please log in.";
+                    header("Location: login.php");
+                    exit;
                 } else {
-                    echo '<div class="alert alert-danger fade show" role="alert">
-                            Error: ' . mysqli_error($conn) . '
-                         </div>';
+                    $_SESSION['error'] = "Registration failed. Try again.";
                 }
+                $stmt->close();
             }
         }
+
+        $conn->close();
     }
     ?>
+
 
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
+                <?php
+                if (isset($_SESSION['error'])) {
+                    echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+                    unset($_SESSION['error']);
+                }
+                if (isset($_SESSION['success'])) {
+                    echo '<div class="alert alert-success">' . $_SESSION['success'] . '</div>';
+                    unset($_SESSION['success']);
+                }
+                ?>
+
                 <div class="card shadow-lg border-0 rounded-3">
                     <div class="card-body p-4">
                         <h3 class="text-center mb-4 text-primary fw-bold">Create an Account</h3>
                         <form action="register.php" method="post">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="John Doe" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<?php echo htmlspecialchars($name); ?>">
+                                <small class="text-danger"> <?php echo $nameError; ?></small>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="<?php echo htmlspecialchars($email); ?>">
+                                <small class="text-danger"> <?php echo $emailError ?></small>
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Choose a strong password" required>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Choose a strong password" value="<?php echo htmlspecialchars($password); ?>">
+                                <small class="text-danger"> <?php echo $passwordError ?></small>
                             </div>
 
                             <div class="mb-4">
                                 <label for="cpassword" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Repeat your password" required>
+                                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Repeat your password" value="<?php echo htmlspecialchars($cpassword); ?>">
+                                <small class="text-danger"> <?php echo $cpasswordError ?></small>
                             </div>
 
                             <div class="d-grid">
