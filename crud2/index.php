@@ -304,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 pageLength: 5
             });
 
-            $('.editBtn').on('click', function() {
+            $(document).on('click','.editBtn', function() {
                 const btn = $(this);
                 $('#edit-id').val(btn.data('id'));
                 $('#edit-name').val(btn.data('name'));
