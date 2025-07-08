@@ -1,10 +1,10 @@
 <?php
+require 'vendor/autoload.php'; 
+include 'connection.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php';
-include 'connection.php';
 $message = "";
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update->bind_param("sss", $token, $expiration, $email);
         $update->execute();
 
-        $mail = new PHPMailer();
+        $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
             $mail->Host = 'smtp.ethereal.email';// Ethereal SMTP
