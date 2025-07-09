@@ -2,8 +2,8 @@
 
 $servername = "localhost";
 $username = "root";     
-$password = "";
-$database = "themedb"; // Replace with your database name
+$password = "root";
+$database = "themedb"; 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
