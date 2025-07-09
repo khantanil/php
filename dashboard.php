@@ -172,6 +172,11 @@ $email = $_SESSION['email'];
                   <div data-i18n="Tags">Tags</div>
                 </a>
               </li>
+               <li class="menu-item">
+                <a href="contact-detail.php" class="menu-link">
+                  <div data-i18n="Contact">Contact</div>
+                </a>
+              </li>
 
             </ul>
           </li>

@@ -383,7 +383,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
                                                     <tr>
                                                         <td><?= htmlspecialchars($cat['id']) ?></td>
                                                         <td><?= htmlspecialchars($cat['name']) ?></td>
-                                                        <td><?= htmlspecialchars($cat['slug']) ?></td>
+                                                     <td><?= htmlspecialchars($cat['slug'] ?? '') ?></td>
+
                                                         <td><?= htmlspecialchars($cat['created_at']) ?></td>
                                                         <td>
                                                             <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editCategoryModal<?= $cat['id'] ?>">Edit</button>
