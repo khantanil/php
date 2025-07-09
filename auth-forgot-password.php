@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $message = "";
-// Check if the form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST['email'];
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
-            $mail->Host = 'smtp.ethereal.email';// Ethereal SMTP
+            $mail->Host = 'smtp.ethereal.email';
             $mail->SMTPAuth = true;
             $mail->Username = 'blair.littel79@ethereal.email';
             $mail->Password = 'ujv5UkP9hGYKSxjwJy';
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Port = 587;
 
             $mail->setFrom('blair.littel79@ethereal.email', 'Anil');
-            $mail->addAddress($email); // recipient
+            $mail->addAddress($email); 
             $mail->addReplyTo('anilkhant674@gmail.com', 'Anil');
 
             $mail->isHTML(true);
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = 'Mailer Error: ' . $mail->ErrorInfo;
         }
     } else {
-        // Email does not exist
+   
         $message = "No account found with that email address.";
     }
 }
